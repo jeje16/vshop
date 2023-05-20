@@ -1,0 +1,67 @@
+.background{
+    background-color: white;
+}
+.login{
+    /* background-color:blue; */
+    background-color:blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width:400px;
+    margin:auto;
+    border:2px solid gray;
+
+}
+.login_logoImage{
+    display:inline-block;
+}
+.login_logoTille{
+    /* background-color: blue; */
+    display: inline-block;
+}
+.login_signInButton{
+ width:100%;
+ border-radius: 1%;
+
+}
+.login_registerButton{
+    background-color:rgb(162, 157, 157);
+    width:90%;
+    margin:auto;
+    border-radius: 5%;
+
+
+}
+h5{
+    margin:auto;
+}
+input{
+  background-color: azure;
+    width:100%;
+    padding:0;
+    height:40px;
+}
+.login_form{
+    display: block;
+    text-align:left;
+    align-content: center;
+    width:90%;
+    margin:auto;
+}
+.login_container {
+    /* background-color:rgb(76, 172, 181); */
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
+    width:fit-content;
+    /* border:2px solid gray; */
+
+
+    
+
+}
+.policy{
+    size:8px;
+}
