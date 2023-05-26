@@ -5,11 +5,12 @@ import { Link } from "react-router-dom";
 import CheckoutProduct from './CheckoutProduct';
 import Subtotal from './Subtotal';
 import { useSelector, useDispatch } from 'react-redux';
-import { decrement, increment } from './features/counter/counterSlice';
+import { decrement, increment, } from './features/counter/counterSlice';
 import Header from "./Header"; 
 
 export default function Checkout() {
     const allCheckoutProducts= useSelector((state)=> state.counter.productArray);
+    let isIn=useSelector((state)=>state.loggedIn);
   const dispatch = useDispatch()
 
  

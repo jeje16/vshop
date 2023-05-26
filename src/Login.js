@@ -1,35 +1,62 @@
 import React, { useState } from "react";  
 import StorefrontIcon from '@mui/icons-material/Storefront';
-import { Link} from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import { useSelector, useDispatch } from 'react-redux';
+import {isLoggedIn,isNotLoggedIn} from './features/counter/counterSlice'
+import axios from "axios";
 import "./Login.css";
 
-function Login() {
-       let navigate = useNavigate();
-    const[email,setEmail]=useState('');
-    const [password, setPassword] = useState('');
-    //user authentication before getting in account
 
-    const signIn= e=>{
+   function Login() {
+    let isIn=useSelector((state)=>state.loggedIn);
+    const dispatch = useDispatch()
+      const navigate = useNavigate();
+      const [email, setEmail]=useState("");
+      const [password, setPassword]=useState("");
+       
+      const handleError = (err) =>
+        toast.error(err, {
+          position: "bottom-left",
+        });
+      const handleSuccess = (msg) =>
+        toast.success(msg, {
+          position: "bottom-left",
+        });
+   
+      const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        navigate('/');
-        
-    }
+    
+            
+        try {
+          const { data } = await axios.post(
+            "http://localhost:5000/login",
+            {
+              email,password
+            },
+            { withCredentials: true }
+          );
+          
+          const { success, message } = data;
+          if (success) {
+          dispatch(isLoggedIn());
+            handleSuccess(message);
+            setTimeout(() => {
+              navigate("/");
+            }, 1000);
+          } else {
+            handleError(message);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        // dispatch(isNotLoggedIn);
+        setEmail("");
+        setPassword("");
+      };
+    
+       
 
-
-
-
-    //     const register= e=>{
-    //         auth
-    //         .createUserWithEmailAndPassword(email,password)
-    //         .then(auth=>{
-    //             if(auth){
-    //               history.pushState('/');  
-    //             }
-                
-    //         }).catch(error=>alert(error.message));
-    // }
   return (
     <div className="background">
     <div className='login'>
@@ -43,14 +70,14 @@ function Login() {
         <div className="login_container">
             <h1>sign-in</h1>
 
-            <form className="login_form">
+            <form className="login_form" onSubmit={handleSubmit}>
                 <h5>E-mail</h5>
-                <input type="text" value={email} onChange={e=>setEmail(e.target.value)}/>
+                <input type="text" value={email} onChange={(e)=>setEmail(e.target.value)}/>
                
                 <h5>Password</h5>
-                <input type="text" value={password} onChange={e=>setPassword(e.target.value)}/>
+                <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
 
-                <button type="submit" className='login_signInButton' onClick={signIn} >Sign In</button>
+                <button type="submit" className='login_signInButton' >Sign In</button>
 
             </form>
             <p className="policy">
@@ -62,7 +89,7 @@ function Login() {
                 Create your versyle <StorefrontIcon className='login_logoImage'/> account</button>
                 </Link>
         </div>
-        
+        <ToastContainer />
     </div>
     </div>
   )

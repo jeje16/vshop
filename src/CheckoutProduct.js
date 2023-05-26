@@ -2,12 +2,15 @@ import React from 'react';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import "./CheckoutProduct.css";
 import { useSelector, useDispatch } from 'react-redux';
-import { decrement,deleteCartItems } from './features/counter/counterSlice'
+import { decrement,deleteCartItems,isLoggedIn,isNotLoggedIn } from './features/counter/counterSlice'
 import { PhotoSizeSelectActual } from '@material-ui/icons';
 
 
 export default function CheckoutProduct({productPrice,img,name,identify,description}) {
   const count = useSelector((state) => state.counter.postion)
+  let isIn=useSelector((state)=>state.loggedIn);
+
+  
   //const productArray=useSelector((state)=>{state.counter.productArray})
   const dispatch = useDispatch();
     function eraseItem(e){

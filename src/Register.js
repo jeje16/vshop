@@ -28,7 +28,7 @@ function Register() {
             alert("Data saved succesfully");
             setEmail("");
             setPassword("");
-            navigate("/");
+            navigate("/login");
         }
     }
     return (

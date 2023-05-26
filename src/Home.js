@@ -1,13 +1,62 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-//import { decrement, increment } from './counterSlice';
 import Header from "./Header"; 
-
-
 import Product from "./Product";
 import "./Home.css";
+//========================================================\\
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+import {isLoggedIn,isNotLoggedIn} from './features/counter/counterSlice'
+import { ToastContainer, toast } from "react-toastify";
+
+
+
+
  
 export default function Home() {
+  // redux toolkit
+  let isLoggedIn=useSelector((state)=>state.loggedIn);
+  const dispatch=useDispatch();
+// internal state
+  const navigate = useNavigate();
+  const [cookies, removeCookie] = useCookies([]);
+  const [username, setUsername] = useState("");
+  useEffect(() => {
+    const verifyCookie = async () => {
+      if (!cookies.token) {
+        navigate("/");
+      }
+      const { data } = await axios.post(
+        "http://localhost:5000",
+        {},
+        { withCredentials: true }
+      );
+      const { status, user } = data;
+      console.log(status+" and "+ user)
+            setUsername(user);
+      return status
+        ? ()=>{
+          alert("hello"+user);
+          console.log(user)
+          setUsername(user)}
+        : (removeCookie("token"), navigate("/"));
+    };
+
+    verifyCookie();
+  },
+   [cookies, navigate, removeCookie]);
+
+  const Logout = () => {
+    removeCookie("token");
+            navigate("/");
+            dispatch(isNotLoggedIn());
+        
+  };
+
+
+
   let description=["This is a 4th generation jet engine design to keep people in check",
             "This jet engine is a tv made funny",
           "this jet engine is car made happy",
@@ -16,7 +65,7 @@ export default function Home() {
     "Multibilion dollars jet engine create by me"];
   return (
     <div>
-      <Header />
+      <Header username={username} logout={Logout}/>
       <div className="home">
         <div className="home_container">
           <img className='home_mainImage' src="https://www.x-cart.com/img/16591/ecommerce-p800.jpg" />

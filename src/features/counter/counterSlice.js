@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import CheckoutProduct from '../../CheckoutProduct';
 import Product from "../../Product";
 const initialState = {
-
+  loggedIn:false,
   itemPrice:0,
   itemTitle:0,
   itemStars:0,
@@ -18,6 +18,13 @@ export const counterSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
+    isLoggedIn:(state)=>{
+      state.loggedIn=true;
+    },
+    isNotLoggedIn:(state)=>{
+      state.loggedIn=false;
+    },
+
     createCartItems:(state,action)=>{
       state.position++;
 
@@ -34,12 +41,7 @@ export const counterSlice = createSlice({
     deleteCartItems:(state,action)=>{
       state.totalItemPrices-=action.payload.productPrice;
 
-      // for(let i=0; i<state.productArray.length; i++){
-      //   if(state.productArray[i].props.identify===action.payload.identify)
-      //     state.productArray.splice(i,1);
-      // }
-
-       state.productArray.splice(action.payload.identify,1);
+         state.productArray.splice(action.payload.identify,1);
       for(let i=0; i<state.productArray.length; i++){
         state.productArray[i].props.identify=i;
       } 
@@ -59,7 +61,7 @@ export const counterSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement,createCartItems,deleteCartItems } = counterSlice.actions
+export const { increment, decrement,createCartItems,deleteCartItems,isLoggedIn,isNotLoggedIn } = counterSlice.actions
 
 export default counterSlice.reducer;
 
