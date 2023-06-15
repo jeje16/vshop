@@ -26,7 +26,8 @@ function Header({username,logout}){
             <Link to ="/" style={{textDecoration:"none"}}>
             <div className="header_logo">
                 <StorefrontIcon className="header_logoImage" fontSize="large"/>
-                <h2 className="header_logoTitle">VersyleShop</h2>
+                <img src="storelogo.jpg" className="small_logo"/>
+                {/* <h2 className="header_logoTitle"></h2> */}
             </div>
 
             </Link>

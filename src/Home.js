@@ -12,6 +12,7 @@ import {isLoggedIn,isNotLoggedIn} from './features/counter/counterSlice'
 import { ToastContainer, toast } from "react-toastify";
 
 
+const baseUrl = process.env.REACT_APP_ENVIRONMENT === 'dev' ? process.env.REACT_APP_LOCAL_URL : process.env.REACT_APP_PROD_URL
 
 
  
@@ -29,7 +30,7 @@ export default function Home() {
         navigate("/");
       }
       const { data } = await axios.post(
-        "http://localhost:5000",
+        baseUrl,
         {},
         { withCredentials: true }
       );

@@ -4,6 +4,9 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import { useNavigate } from 'react-router-dom';
 //import axios from "axios";
 import "./Login.css";
+
+const baseUrl = process.env.REACT_APP_ENVIRONMENT === 'dev' ? process.env.REACT_APP_LOCAL_URL : process.env.REACT_APP_PROD_URL
+
 function Register() {
     
     const [email, setEmail] = useState("");
@@ -15,7 +18,7 @@ function Register() {
         e.preventDefault();
         //API call using fetch
         let result = await fetch(
-        'http://localhost:5000/register', {
+            baseUrl +'register', {
             method: "post",
             body: JSON.stringify({email,username,password}),
             headers: {

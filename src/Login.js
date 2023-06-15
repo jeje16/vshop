@@ -7,6 +7,7 @@ import {isLoggedIn,isNotLoggedIn} from './features/counter/counterSlice'
 import axios from "axios";
 import "./Login.css";
 
+const baseUrl = process.env.REACT_APP_ENVIRONMENT === 'dev' ? process.env.REACT_APP_LOCAL_URL : process.env.REACT_APP_PROD_URL
 
    function Login() {
     let isIn=useSelector((state)=>state.loggedIn);
@@ -29,8 +30,9 @@ import "./Login.css";
     
             
         try {
+          console.log("fetching from: " + baseUrl + "login")
           const { data } = await axios.post(
-            "http://localhost:5000/login",
+            baseUrl + "login",
             {
               email,password
             },
